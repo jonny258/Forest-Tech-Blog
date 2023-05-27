@@ -1,0 +1,21 @@
+{
+  "name": "tech-blog-mvc",
+  "version": "1.0.0",
+  "description": "this is a tech blog made using templates and authentication",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonny258/Tech-Blog-MVC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonny258/Tech-Blog-MVC/issues"
+  },
+  "homepage": "https://github.com/jonny258/Tech-Blog-MVC#readme"
+}
