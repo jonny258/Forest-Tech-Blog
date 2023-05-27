@@ -1,0 +1,23 @@
+#tech-header{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+nav{
+    background-color: gray;
+    text-decoration: none;
+    padding:20px;
+}
+
+nav a{
+    color: black;
+    padding: 5px;
+}
+
+nav a:hover{
+    text-decoration: underline;
+}
+
