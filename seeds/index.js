@@ -17,3 +17,5 @@ const seedAll = async () => {
 }
 
 seedAll();
+ //this seeds the data with bulk create
+ //you need to remember to include the npm run seed in the package.json folder

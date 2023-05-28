@@ -22,7 +22,7 @@ User.init(
         }
     },
     {
-        sequelize,
+        sequelize, //all of these bottom parts are what define the relationships
         timestamps: false,
         freezeTableName: true,
         underscored: true,
