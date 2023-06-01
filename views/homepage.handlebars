@@ -1,6 +1,21 @@
-{{#each blogs as |blog|}}
-{{> blog-details}}
-{{/each}}
+<section>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        {{#if loggedIn}}
+            <button id="logout-button">Logout</button>
+            <script src="./js/logout.js"></script>
+        {{else}}
+        <a href="/login">Login</a>
+        {{/if}}
+    </nav>
+    <h1 id="tech-header">Tech Blog</h1>
+    <div>
+        {{#each blogs as |blog|}}
+        {{> blog-details}}
+        {{/each}}
+    </div>
+</section>
 
 {{!-- when homepage is called in the routes this will be put in the body of the main.layout --}}
 

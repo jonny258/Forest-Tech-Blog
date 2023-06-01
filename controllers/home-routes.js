@@ -13,6 +13,7 @@ router.get('/', async (req, res) => { //this function is called in async because
     })
     res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
       //or you can define it to a differnt folder name but folder name matters
+      loggedIn: req.session.loggedIn,
       blogs, //this second argument is the data that i send to the template
     });
   }
