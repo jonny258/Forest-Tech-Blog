@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('../config/connection')
+const Blog = require('./blog')
 
 class User extends Model {};
 
@@ -22,12 +23,19 @@ User.init(
         }
     },
     {
-        sequelize, //all of these bottom parts are what define the relationships
+        sequelize, 
         timestamps: false,
         freezeTableName: true,
         underscored: true,
         modelName: 'user',
+        tableName: 'user',
     }
 )
+
+// User.hasMany(Blog, {
+//     foreignKey: 'user_id', // Assuming 'user_id' is the foreign key in the 'blogs' table referencing 'id' in the 'users' table
+//   });
+
+User.hasMany(Blog, { foreignKey: 'user_id' }); // Define the association
 
 module.exports = User;

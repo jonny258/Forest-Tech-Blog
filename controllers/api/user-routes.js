@@ -1,13 +1,21 @@
 const router = require('express').Router();
 const User = require('../../models/user') //pulls in the user model, with this user modle we can select the data in the database
 //this user model in this file is the model part talking to the controller part the communication between those 2 goes both ways
+const Blog = require('../../models/blog')
 
 router.get('/', (req, res) => {
-    User.findAll() //selects all of the data from the database
-    .then(user => {
-        res.json(user) //sends the data in json format
+    User.findAll({
+      include: [Blog] // Include the Blog model to fetch associated blogs
     })
-})
+      .then(users => {
+        res.json(users); // Send the data in JSON format
+      })
+      .catch(error => {
+        console.error('Error retrieving users:', error);
+        res.status(500).json({ error: 'An error occurred while retrieving users' });
+      });
+  });
+  
 
 
 router.post('/signup', async (req, res) => {
