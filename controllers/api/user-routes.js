@@ -10,5 +10,17 @@ router.get('/', (req, res) => {
 })
 
 
+router.post('/signup', (req, res) => {
+  const { username, password } = req.body
+  console.log(username)
+  console.log(password)
+})
+
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  console.log('login: ' + username) 
+  console.log('login: ' + password) 
+})
+
 
 module.exports = router;

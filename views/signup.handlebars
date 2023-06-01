@@ -1,17 +1,16 @@
 <section class="container">
-    <form method="POST" action="/login">
         <div>
             <label>Username</label>
-            <input type="text" name="username" placeholder="Username">
+            <input id="signup-username" type="text" name="username" placeholder="Username">
         </div>
         <div>
-            <label>Paassword</label>
-            <input type="password" name="password" placeholder="Password">
+            <label>Password</label>
+            <input id="signup-password" type="password" name="password" placeholder="Password">
         </div>
-        <button type="submit">Submit</button>
-    </form>
+        <button id="signup-button">Submit</button>
     <h4>Already have an account? login here</h4>
     <button><a href="/login">login</a></button>
+    <script src="./js/signup.js"></script>
 </section>
 
 {{!-- this will get put in the body of main.handlebars --}}
