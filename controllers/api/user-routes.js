@@ -2,10 +2,16 @@ const router = require('express').Router();
 const User = require('../../models/user') //pulls in the user model, with this user modle we can select the data in the database
 //this user model in this file is the model part talking to the controller part the communication between those 2 goes both ways
 const Blog = require('../../models/blog')
+const BlogUser = require('../../models/bloguser')
 
 router.get('/', (req, res) => {
     User.findAll({
-       include: [Blog] // Include the Blog model to fetch associated blogs
+       include: [
+        {
+            model: Blog,
+            through: BlogUser,
+        }
+       ]
     })
       .then(users => {
         res.json(users); // Send the data in JSON format
