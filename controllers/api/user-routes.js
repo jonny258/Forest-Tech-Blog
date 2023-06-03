@@ -5,7 +5,7 @@ const Blog = require('../../models/blog')
 
 router.get('/', (req, res) => {
     User.findAll({
-      include: [Blog] // Include the Blog model to fetch associated blogs
+       include: [Blog] // Include the Blog model to fetch associated blogs
     })
       .then(users => {
         res.json(users); // Send the data in JSON format

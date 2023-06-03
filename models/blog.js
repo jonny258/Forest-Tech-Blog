@@ -20,14 +20,6 @@ Blog.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    user_id: {
-        type: DataTypes.INTEGER, // Assuming user_id is an INTEGER type
-        allowNull: false,
-        references: {
-          model: 'user', // Name of the User model
-          key: 'id', // Primary key of the User model
-        },
-      },
   },
   {
     sequelize,
@@ -45,6 +37,6 @@ Blog.init(
 //   });
 // Establish association
 
-Blog.belongsTo(User, { foreignKey: 'user_id' }); // Define the association
+// Blog.belongsTo(User, { foreignKey: 'user_id' }); // Define the association
 
 module.exports = Blog;

@@ -20,7 +20,7 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
     },
     {
         sequelize, 
@@ -36,6 +36,6 @@ User.init(
 //     foreignKey: 'user_id', // Assuming 'user_id' is the foreign key in the 'blogs' table referencing 'id' in the 'users' table
 //   });
 
-User.hasMany(Blog, { foreignKey: 'user_id' }); // Define the association
+// User.hasMany(Blog, { foreignKey: 'user_id' }); // Define the association
 
 module.exports = User;

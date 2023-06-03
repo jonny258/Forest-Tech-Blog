@@ -2,15 +2,30 @@ const User = require('../models/user');
 
 const userSeedData = [
   {
-    username: 'john_doe',
+    username: 'JohnDoe',
     password: 'password123',
   },
   {
-    username: 'jane_smith',
-    password: 'qwerty456',
+    username: 'JaneSmith',
+    password: 'p@ssw0rd',
   },
-  // Add more user seed data as needed
+  {
+    username: 'AliceJohnson',
+    password: 'alicepass',
+  },
+  {
+    username: 'BobWilliams',
+    password: 'bobspassword',
+  },
+  {
+    username: 'EmilyDavis',
+    password: 'emilypw',
+  },
 ];
+
+module.exports = userSeedData;
+
+
 
 const seedUsers = async () => {
   try {
