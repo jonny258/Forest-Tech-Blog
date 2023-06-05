@@ -3,5 +3,9 @@
     <h4>{{users.[0].username}}</h4>
     <h4>{{createdAt}}</h4>
     <p>{{body}}</p>
+    <section>
+        {{#each comments as |comment|}}
+        {{> comment-details}}
+        {{/each}}
+    </section>
 </section>
-

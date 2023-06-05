@@ -25,3 +25,7 @@ nav a:hover{
 .blog-card{
     background-color: antiquewhite;
 }
+
+.comment-card{
+    background-color: aquamarine;
+}

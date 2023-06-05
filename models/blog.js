@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const User = require('./user'); // Import the User model
+const Comment = require('./comment')
 
 class Blog extends Model {}
 
@@ -31,11 +32,7 @@ Blog.init(
 );
 
 
-//   Blog.belongsTo(User, {
-//     foreignKey: 'user_id', // Assuming 'user_id' is the foreign key in the 'blogs' table referencing 'id' in the 'users' table
-//   });
-// Establish association
-
-// Blog.belongsTo(User, { foreignKey: 'user_id' }); // Define the association
+Blog.hasMany(Comment, { foreignKey: 'blog_id' });
+Comment.belongsTo(Blog, { foreignKey: 'blog_id' });
 
 module.exports = Blog;

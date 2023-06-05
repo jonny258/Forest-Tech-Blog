@@ -3,6 +3,7 @@ const sequelize = require('../config/connection'); //i still need to require seq
 const Blog = require('../models/blog');
 const User = require('../models/user');
 const BlogUser = require('../models/bloguser')
+const Comment = require('../models/comment')
 
 //HOME PAGE
 router.get('/', async (req, res) => { //this function is called in async because i have things after the call i make to the database
@@ -11,10 +12,13 @@ router.get('/', async (req, res) => { //this function is called in async because
     const dbBlogUserData = await Blog.findAll({
       include: [
         {
+          model: Comment,
+        },
+        {
           model: User,
           through: BlogUser,
-        }
-      ]
+        },
+      ],
     }) //gets all the data async
     const blogs = dbBlogUserData.map((blog) => { //this map function gives me a new array with all the SQL data turned into normal json data
       return blog.get({ plain: true }) //this is one of the properties that i need to call to get it wo work
