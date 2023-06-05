@@ -3,8 +3,8 @@
         <a href="/">Home</a>
         {{#if loggedIn}}
         <a href="/dashboard">Dashboard</a>
-            <button id="logout-button">Logout</button>
-            <script src="./js/logout.js"></script>
+        <button id="logout-button">Logout</button>
+        <script src="./js/logout.js"></script>
         {{else}}
         <a href="/login">Dashboard</a>
         <a href="/login">Login</a>
@@ -16,6 +16,7 @@
         {{> blog-details}}
         {{/each}}
     </div>
+    <script src="./js/blog-details.js"></script>
 </section>
 
 {{!-- when homepage is called in the routes this will be put in the body of the main.layout --}}

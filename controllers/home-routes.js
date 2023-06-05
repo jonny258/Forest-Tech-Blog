@@ -49,10 +49,18 @@ router.get('/', async (req, res) => { //this function is called in async because
 })
 
 
+router.get('/dashboard', async (req, res) => {
+  res.render('dashboard', {
+    loggedIn: req.session.loggedIn,
+  })
+})
+
 //SIGN UP
 router.get('/signup', (req, res) => {
   res.render('signup')
 })
+
+
 
 // router.post('/signup', (req, res) => {
 //   const { username, password } = req.body

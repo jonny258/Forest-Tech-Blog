@@ -1,9 +1,12 @@
 <section class="blog-card">
-    <h2>{{title}}</h2>
-    <h4>{{users.[0].username}}</h4>
-    <h4>{{createdAt}}</h4>
-    <p>{{body}}</p>
-    <section>
+    <section class="main-blog">
+        <h2>{{title}}</h2>
+        <h4>{{users.[0].username}}</h4>
+        <h4>{{createdAt}}</h4>
+        <p>{{body}}</p>
+    </section>
+
+    <section class="comment-section">
         {{#each comments as |comment|}}
         {{> comment-details}}
         {{/each}}
