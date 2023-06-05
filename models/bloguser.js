@@ -48,7 +48,6 @@ BlogUser.init(
 //     foreignKey: 'user_id',
 //   });
 
-
 User.belongsToMany(Blog, { through: BlogUser });
 
 Blog.belongsToMany(User, { through: BlogUser });
