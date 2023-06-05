@@ -4,6 +4,7 @@ const Blog = require('../models/blog');
 const User = require('../models/user');
 const BlogUser = require('../models/bloguser')
 const Comment = require('../models/comment')
+const {format_date, format_time} = require('../utils/helper')
 
 //HOME PAGE
 router.get('/', async (req, res) => { //this function is called in async because i have things after the call i make to the database
@@ -20,9 +21,15 @@ router.get('/', async (req, res) => { //this function is called in async because
         },
       ],
     }) //gets all the data async
-    const blogs = dbBlogUserData.map((blog) => { //this map function gives me a new array with all the SQL data turned into normal json data
-      return blog.get({ plain: true }) //this is one of the properties that i need to call to get it wo work
-    })
+    const blogs = dbBlogUserData.map((blog) => {
+      const formattedBlog = blog.get({ plain: true });
+      formattedBlog.createdAt = format_date(formattedBlog.createdAt);
+      formattedBlog.comments.forEach(comment => {
+        comment.createdAt = format_date(comment.createdAt);
+      })
+      return formattedBlog;
+    });
+
     if(req.session.loggedIn){
       console.log(blogs)
       res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
