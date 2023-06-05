@@ -38,15 +38,21 @@ BlogUser.init(
     }
 )
 
-Blog.belongsTo(User, {
-    through: BlogUser,
-    foreignKey: 'blog_id',
-  });
+// Blog.belongsTo(User, {
+//     through: BlogUser,
+//     foreignKey: 'blog_id',
+//   });
   
-  User.belongsToMany(Blog, {
-    through: BlogUser,
-    foreignKey: 'user_id',
-  });
+//   User.belongsToMany(Blog, {
+//     through: BlogUser,
+//     foreignKey: 'user_id',
+//   });
+
+
+User.belongsToMany(Blog, { through: BlogUser });
+
+Blog.belongsToMany(User, { through: BlogUser });
+
 
 
 module.exports = BlogUser;

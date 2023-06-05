@@ -1,23 +1,37 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection'); //i still need to require sequalize here so that i can use some of the different properties
 const Blog = require('../models/blog');
-const User = require('../models/user')
- 
+const User = require('../models/user');
+const BlogUser = require('../models/bloguser')
+
 //HOME PAGE
 router.get('/', async (req, res) => { //this function is called in async because i have things after the call i make to the database
   //the call to the database takes time so the function will just skip and go to the next part
-  try { //try and catch are only used in async functions and they are similar to .then .catch
-    const dbBlogData = await Blog.findAll() //gets all the data async
-    const blogs = dbBlogData.map((blog) => { //this map function gives me a new array with all the SQL data turned into normal json data
+  try {
+    const dbBlogUserData = await Blog.findAll({
+      include: [
+        {
+          model: User,
+          through: BlogUser,
+        }
+      ]
+    }) //gets all the data async
+    const blogs = dbBlogUserData.map((blog) => { //this map function gives me a new array with all the SQL data turned into normal json data
       return blog.get({ plain: true }) //this is one of the properties that i need to call to get it wo work
     })
-    res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
-      //or you can define it to a differnt folder name but folder name matters
-      loggedIn: req.session.loggedIn,
-      blogs, //this second argument is the data that i send to the template
-    });
+    if(req.session.loggedIn){
+      console.log(blogs)
+      res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
+        
+        loggedIn: req.session.loggedIn,
+        blogs, //this second argument is the data that i send to the template
+      });
+    }else{
+      res.redirect('/login')
+    }
+
   }
-  catch(err){
+  catch (err) {
     console.log(err)
     res.status(500).json(err) //sets the status then sends the error in json
   }
