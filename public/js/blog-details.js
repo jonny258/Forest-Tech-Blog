@@ -13,9 +13,32 @@ const displayComments = (i) => {
     }
 }
 
+const format_date = (date) => {
+    return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${
+      new Date(date).getFullYear()
+    }`;
+}
+
+const addCommentHTML = (commentData, i) => {
+    const date = format_date(commentData.createdAt)
+    const card = document.createElement('section')
+    const author = document.createElement('h4')
+    const createdAt = document.createElement('h4')
+    const body = document.createElement('p')
+
+    card.setAttribute('class', 'comment-card')
+    author.textContent = commentData.author
+    createdAt.textContent = date
+    body.textContent = commentData.body
+
+    card.append(author, createdAt, body)
+
+    commentSection[i].append(card)
+}
+
+
 
 const addComment = (i) => {
-    console.log(commentInput[i].value)
     fetch('/api/blog/comment', {
         method: 'POST',
         headers: {
@@ -28,10 +51,11 @@ const addComment = (i) => {
     })
         .then(data => { return data.json() })
         .then(data => {
+
             if (data.alert) {
                 alert(data.alert);
-            } else if (data.success) {
-                console.log(data)
+            } else {
+                addCommentHTML(data.comment, i)
             }
         })
         .catch(err => console.log(err))
