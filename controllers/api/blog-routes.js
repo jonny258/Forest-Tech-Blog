@@ -73,5 +73,42 @@ router.post('/newblog', async (req, res) => {
 
 })
 
+router.delete('/', async (req, res) => {
+  try{
+    console.log(req.body)
+    const blog = await Blog.findByPk(req.body.id)
+    console.log(blog)
+
+    const deleted = await blog.destroy()
+  }
+  catch(err){
+    res.status(500).json(err)
+  }
+})
+
+
+router.put('/', async (req, res) => {
+  try{
+    console.log(req.body)
+    //const blog = await Blog.findByPk(req.body.id)
+
+    const updateBlog = await Blog.update(
+      {
+        title: req.body.title,
+        body: req.body.body
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    )
+    //console.log(blog)
+  }
+  catch(err){
+    res.status(500).json(err)
+  }
+})
+
 
 module.exports = router; //you must export something so that this can beused in other file locations

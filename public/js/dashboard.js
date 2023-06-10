@@ -2,6 +2,56 @@ const newBlogTitle = document.querySelector('#new-blog-title')
 const newBlogBody = document.querySelector('#new-blog-body')
 const newBlogButton = document.querySelector('#new-blog-button')
 
+const updateBlogTitle = document.querySelectorAll('.update-blog-title')
+const updateBlogBody = document.querySelectorAll('.update-blog-body')
+const updateBlogButton = document.querySelectorAll('.update-blog-button')
+const deleteBlogButton = document.querySelectorAll('.delete-blog-button')
+
+const updateBlog = (title, body, id) => {
+  fetch('/api/blog/', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+      },
+    body: JSON.stringify({ 
+        title: title,
+        body: body,
+        id: id
+     })
+})
+.then(data => {return data.json()})
+.then(data => console.log(data))
+.catch(err => console.log(err))
+}
+
+const deleteBlog = (title, body, id) => {
+  fetch('/api/blog/', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+      },
+    body: JSON.stringify({ 
+        title: title,
+        body: body,
+        id: id
+     })
+})
+.then(data => {return data.json()})
+.then(data => console.log(data))
+.catch(err => console.log(err))
+}
+
+
+for(let i=0; i<updateBlogTitle.length; i++){
+  updateBlogButton[i].addEventListener('click', () => {
+    updateBlog(updateBlogTitle[i].value, updateBlogBody[i].value, updateBlogTitle[i].name)
+  })
+
+  deleteBlogButton[i].addEventListener('click', () => {
+    deleteBlog(updateBlogTitle[i].value, updateBlogBody[i].value, updateBlogTitle[i].name)
+  })
+}
+
 const createNewBlog = () => {
   fetch('/api/blog/newblog', {
     method: 'POST',
@@ -27,7 +77,8 @@ newBlogButton.addEventListener('click', createNewBlog)
 
 
 
-//MODALs
+
+//MODALS STUFF
 
 const openModalButton = document.getElementById('open-modal');
 const modal = document.getElementById('modal');
