@@ -1,5 +1,6 @@
 <section class="blog-card">
     <section class="main-blog">
+        <p>Click to see comments</p>
         <h2>{{title}}</h2>
         <h4>{{users.[0].username}}</h4>
         <h4>{{createdAt}}</h4>
@@ -7,8 +8,12 @@
     </section>
 
     <section class="comment-section">
+        <div class="add-comment">
+            <lable>Add comment</lable>
+            <input class="comment-input">
+            <button class="comment-submit">Submit</button>
+        </div>  
         {{#each comments as |comment|}}
         {{> comment-details}}
         {{/each}}
     </section>
-</section>

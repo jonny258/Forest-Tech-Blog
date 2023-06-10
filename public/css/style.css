@@ -26,9 +26,21 @@ nav a:hover{
     background-color: antiquewhite;
 }
 
+.comment-section{
+  background-color: chartreuse;
+  display: none;
+}
+
+.add-comment{
+  background-color: brown;
+}
+
 .comment-card{
     background-color: aquamarine;
+    border-bottom: black 3px solid;
 }
+
+
 
 
 /* modal */
