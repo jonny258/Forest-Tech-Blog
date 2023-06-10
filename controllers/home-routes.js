@@ -4,7 +4,7 @@ const Blog = require('../models/blog');
 const User = require('../models/user');
 const BlogUser = require('../models/bloguser')
 const Comment = require('../models/comment')
-const {format_date, format_time} = require('../utils/helper')
+const { format_date, format_time } = require('../utils/helper')
 
 //HOME PAGE
 router.get('/', async (req, res) => { //this function is called in async because i have things after the call i make to the database
@@ -30,17 +30,10 @@ router.get('/', async (req, res) => { //this function is called in async because
       return formattedBlog;
     });
 
-    if(req.session.loggedIn){
-      console.log(blogs)
-      res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
-        
-        loggedIn: req.session.loggedIn,
-        blogs, //this second argument is the data that i send to the template
-      });
-    }else{
-      res.redirect('/login')
-    }
-
+    res.render('homepage', { //this renders a template, the file structure is very importiant when using templates this line of code can really only work in a views folder
+      loggedIn: req.session.loggedIn,
+      blogs, //this second argument is the data that i send to the template
+    });
   }
   catch (err) {
     console.log(err)
@@ -50,49 +43,54 @@ router.get('/', async (req, res) => { //this function is called in async because
 
 
 router.get('/dashboard', async (req, res) => {
-  try{
-    const loggedInUserId = req.session.userid;
-    console.log(loggedInUserId)
-    const blogs = await Blog.findAll({
-      include: [
-        {
-          model: User,
-          through: BlogUser,
-          where: { id: loggedInUserId}
-        }
-      ]
-    })
-    // const formattedBlog = blogs.get({ plain: true });
+  try {
+    if (!req.session.loggedIn) {
+      res.redirect('/login')
+    } else {
+      const loggedInUserId = req.session.userid;
+      console.log(loggedInUserId)
+      const blogs = await Blog.findAll({
+        include: [
+          {
+            model: User,
+            through: BlogUser,
+            where: { id: loggedInUserId }
+          }
+        ]
+      })
+      // const formattedBlog = blogs.get({ plain: true });
 
-    // console.log(formattedBlog)
-    const blogValues = blogs.map(blog => {
-      return blog.dataValues
-    })
-    console.log(blogValues)
-    res.render('dashboard', {
-      loggedIn: req.session.loggedIn,
-      userBlogs: blogValues
-    })
+      // console.log(formattedBlog)
+      const blogValues = blogs.map(blog => {
+        return blog.dataValues
+      })
+      console.log(blogValues)
+      res.render('dashboard', {
+        loggedIn: req.session.loggedIn,
+        userBlogs: blogValues
+      })
+    }
   }
 
-  
-  
-  catch(err){
+
+
+
+  catch (err) {
     res.status(400).json(err)
   }
 })
-  // for(let i=0; i<blogs.length; i++){
-  //   console.log(blogs[i].dataValues.users[0].dataValues)
-  // }
+// for(let i=0; i<blogs.length; i++){
+//   console.log(blogs[i].dataValues.users[0].dataValues)
+// }
 
-  // const userBlogValues = []
-  // for(let i=0; i<blogs.length; i++){
+// const userBlogValues = []
+// for(let i=0; i<blogs.length; i++){
 
-  //   if(blogs[i].dataValues.users[0].dataValues.id === req.session.userid){
-  //     userBlogValues.push(blogs[i].dataValues)
-  //   }
-  // }
-  // console.log(userBlogValues)
+//   if(blogs[i].dataValues.users[0].dataValues.id === req.session.userid){
+//     userBlogValues.push(blogs[i].dataValues)
+//   }
+// }
+// console.log(userBlogValues)
 
 
 

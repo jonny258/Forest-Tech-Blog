@@ -1,13 +1,24 @@
 <section class="container">
-        <div>
-            <label>Username</label>
-            <input id="login-username" type="text" name="username" placeholder="Username">
-        </div>
-        <div>
-            <label>Paassword</label>
-            <input id="login-password" type="password" name="password" placeholder="Password">
-        </div>
-        <button id="login-button">Submit</button>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        {{#if loggedIn}}
+        <button id="logout-button">Logout</button>
+        <script src="./js/logout.js"></script>
+        {{else}}
+        <a href="/login">Login</a>
+        {{/if}}
+    </nav>
+    <h1 id="tech-header">Tech Blog</h1>
+    <div>
+        <label>Username</label>
+        <input id="login-username" type="text" name="username" placeholder="Username">
+    </div>
+    <div>
+        <label>Paassword</label>
+        <input id="login-password" type="password" name="password" placeholder="Password">
+    </div>
+    <button id="login-button">Submit</button>
     <h4>Don't have an account? sign up here</h4>
     <button><a href="/signup">Sign up</a></button>
     <script src="./js/login.js"></script>

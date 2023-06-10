@@ -7,88 +7,97 @@ const BlogUser = require('../../models/bloguser')
 const Comment = require('../../models/comment')
 
 
-router.get('/', async (req, res) => { 
+router.get('/', async (req, res) => {
 
-    try {
-      const dbBlogUserData = await Blog.findAll({
-        include: [
-            {
-              model: Comment, // Include the Comment model
-            },
-            {
-              model: User,
-              through: BlogUser,
-            },
-          ],
-      })
-      const blogs = dbBlogUserData.map((blog) => {
-        return blog.get({ plain: true })
-      })
-      res.json(blogs)
-  
-    }
-    catch (err) {
-      console.log(err)
-      res.status(500).json(err) 
-    }
-  })
+  try {
+    const dbBlogUserData = await Blog.findAll({
+      include: [
+        {
+          model: Comment, // Include the Comment model
+        },
+        {
+          model: User,
+          through: BlogUser,
+        },
+      ],
+    })
+    const blogs = dbBlogUserData.map((blog) => {
+      return blog.get({ plain: true })
+    })
+    res.json(blogs)
+
+  }
+  catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
 
 router.post('/comment', async (req, res) => {
-  const user = await User.findByPk(req.session.userid)
-  const username = user.dataValues.username
-  const newComment = await Comment.create({
-    body: req.body.comment,
-    author: username,
-    blog_id: req.body.blog_id
-  })
-
-  if(!newComment){
-    console.log('something went wrong')
-    res.status(400).json({
-      message: "Something went wrong, please try again"
+  try {
+    if(!req.session.loggedIn){
+      res.status(400).json({ alert: 'Must be logged in to make comments.' });
+    }else{
+      const user = await User.findByPk(req.session.userid)
+    const username = user.dataValues.username
+    const newComment = await Comment.create({
+      body: req.body.comment,
+      author: username,
+      blog_id: req.body.blog_id
     })
-    return
-  }
 
-  res.json({
-    comment: newComment
-  });
+    if (!newComment) {
+      console.log('something went wrong')
+      res.status(400).json({
+        message: "Something went wrong, please try again"
+      })
+      return
+    }
+
+    res.json({
+      comment: newComment
+    });
+    }
+  }
+  catch (err) {
+    res.status(500).json(err)
+  }
 })
 
 router.post('/newblog', async (req, res) => {
-  try{
+  try {
     const newBlog = await Blog.create({
       title: req.body.title,
       body: req.body.body
     })
-    
+
     const newBlogUser = await BlogUser.create({
       user_id: req.session.userid,
       blog_id: newBlog.dataValues.id
     })
   }
-  catch(err){
+  catch (err) {
     res.status(400).json(err)
   }
 
 })
 
 router.delete('/', async (req, res) => {
-  try{
+  try {
     console.log(req.body)
     const blog = await Blog.findByPk(req.body.id)
     console.log(blog)
 
     const deleted = await blog.destroy()
   }
-  catch(err){
+  catch (err) {
     res.status(500).json(err)
   }
 })
 
 
 router.put('/', async (req, res) => {
-  try{
+  try {
     console.log(req.body)
     //const blog = await Blog.findByPk(req.body.id)
 
@@ -105,7 +114,7 @@ router.put('/', async (req, res) => {
     )
     //console.log(blog)
   }
-  catch(err){
+  catch (err) {
     res.status(500).json(err)
   }
 })

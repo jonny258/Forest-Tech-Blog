@@ -5,10 +5,10 @@ const commentSubmit = document.querySelectorAll('.comment-submit')
 
 
 const displayComments = (i) => {
-    if(commentSection[i].style.display === 'block'){
+    if (commentSection[i].style.display === 'block') {
         commentSection[i].style.display = 'none'
     }
-    else{
+    else {
         commentSection[i].style.display = 'block'
     }
 }
@@ -20,19 +20,25 @@ const addComment = (i) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({ 
+        },
+        body: JSON.stringify({
             comment: commentInput[i].value,
-            blog_id: i+1
-         })
+            blog_id: i + 1
+        })
     })
-    .then(data => {return data.json()})
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+        .then(data => { return data.json() })
+        .then(data => {
+            if (data.alert) {
+                alert(data.alert);
+            } else if (data.success) {
+                console.log(data)
+            }
+        })
+        .catch(err => console.log(err))
 }
 
-for(let i=0; i< commentSection.length; i++){
-    
+for (let i = 0; i < commentSection.length; i++) {
+
     const call = () => {
         displayComments(i)
     }

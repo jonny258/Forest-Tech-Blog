@@ -8,11 +8,6 @@
     </section>
 
     <section class="comment-section">
-        <div class="add-comment">
-            <lable>Add comment</lable>
-            <input class="comment-input">
-            <button class="comment-submit">Submit</button>
-        </div>
         {{#each comments as |comment|}}
         {{> comment-details}}
         {{/each}}
