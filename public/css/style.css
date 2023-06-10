@@ -81,3 +81,18 @@ nav a:hover{
   }
 
   /* modal */
+
+  /* .modal {
+    display: none;
+  }
+  
+  .modal-visible {
+    display: block;
+
+  } */
+  
+
+
+  .dashboard-blog{
+    background-color: gray;
+  }

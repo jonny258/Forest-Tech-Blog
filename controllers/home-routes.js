@@ -50,10 +50,52 @@ router.get('/', async (req, res) => { //this function is called in async because
 
 
 router.get('/dashboard', async (req, res) => {
-  res.render('dashboard', {
-    loggedIn: req.session.loggedIn,
-  })
+  try{
+    const loggedInUserId = req.session.userid;
+    console.log(loggedInUserId)
+    const blogs = await Blog.findAll({
+      include: [
+        {
+          model: User,
+          through: BlogUser,
+          where: { id: loggedInUserId}
+        }
+      ]
+    })
+    // const formattedBlog = blogs.get({ plain: true });
+
+    // console.log(formattedBlog)
+    const blogValues = blogs.map(blog => {
+      return blog.dataValues
+    })
+    console.log(blogValues)
+    res.render('dashboard', {
+      loggedIn: req.session.loggedIn,
+      userBlogs: blogValues
+    })
+  }
+
+  
+  
+  catch(err){
+    res.status(400).json(err)
+  }
 })
+  // for(let i=0; i<blogs.length; i++){
+  //   console.log(blogs[i].dataValues.users[0].dataValues)
+  // }
+
+  // const userBlogValues = []
+  // for(let i=0; i<blogs.length; i++){
+
+  //   if(blogs[i].dataValues.users[0].dataValues.id === req.session.userid){
+  //     userBlogValues.push(blogs[i].dataValues)
+  //   }
+  // }
+  // console.log(userBlogValues)
+
+
+
 
 //SIGN UP
 router.get('/signup', (req, res) => {

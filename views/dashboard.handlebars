@@ -10,9 +10,15 @@
         <a href="/login">Login</a>
         {{/if}}
     </nav>
+    <section>
+        {{#each userBlogs as |blog|}}
+        {{> dashboard-details }}
+        {{/each}}
+    </section>
     <h1 id="tech-header">Tech Blog</h1>
     <div id="modal" class="modal">
         <div class="modal-content">
+            <h4>Create new blog</h4>
             <span class="close">&times;</span>
             <div>
                 <label>Title</label>

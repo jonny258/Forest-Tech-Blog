@@ -55,5 +55,23 @@ router.post('/comment', async (req, res) => {
   });
 })
 
+router.post('/newblog', async (req, res) => {
+  try{
+    const newBlog = await Blog.create({
+      title: req.body.title,
+      body: req.body.body
+    })
+    
+    const newBlogUser = await BlogUser.create({
+      user_id: req.session.userid,
+      blog_id: newBlog.dataValues.id
+    })
+  }
+  catch(err){
+    res.status(400).json(err)
+  }
+
+})
+
 
 module.exports = router; //you must export something so that this can beused in other file locations
