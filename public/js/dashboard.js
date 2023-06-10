@@ -1,3 +1,5 @@
+
+
 const newBlogTitle = document.querySelector('#new-blog-title')
 const newBlogBody = document.querySelector('#new-blog-body')
 const newBlogButton = document.querySelector('#new-blog-button')
@@ -10,42 +12,59 @@ const deleteBlogButton = document.querySelectorAll('.delete-blog-button')
 const blogSections = document.querySelectorAll('.dashboard-blog');
 const modals = document.querySelectorAll('.modal');
 
-const updateBlog = (title, body, id) => {
-  fetch('/api/blog/', {
-    method: 'PUT',
-    headers: {
+const updateBlog = async (title, body, id) => {
+  try {
+    const update = document.getElementById(id)
+    update.children[0].children[0].innerText = title
+    const response = await fetch('/api/blog/', {
+      method: 'PUT',
+      headers: {
         'Content-Type': 'application/json',
       },
-    body: JSON.stringify({ 
+      body: JSON.stringify({
         title: title,
         body: body,
         id: id
-     })
-})
-.then(data => {return data.json()})
-.then(data => console.log(data))
-.catch(err => console.log(err))
+      })
+    })
+
+    if (response.ok) {
+      console.log(response)
+    }
+  }
+
+
+  catch (err) {
+    console.error(err)
+  }
 }
 
-const deleteBlog = (title, body, id) => {
-  fetch('/api/blog/', {
-    method: 'DELETE',
-    headers: {
+const deleteBlog = async (title, body, id) => {
+  try {
+    document.getElementById(id).remove()
+    const response = await fetch('/api/blog/', {
+      method: 'DELETE',
+      headers: {
         'Content-Type': 'application/json',
       },
-    body: JSON.stringify({ 
+      body: JSON.stringify({
         title: title,
         body: body,
         id: id
-     })
-})
-.then(data => {return data.json()})
-.then(data => console.log(data))
-.catch(err => console.log(err))
+      })
+    })
+
+    if (response.ok) {
+      console.log(response)
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
 }
 
 
-for(let i=0; i<updateBlogTitle.length; i++){
+for (let i = 0; i < updateBlogTitle.length; i++) {
   updateBlogButton[i].addEventListener('click', () => {
     updateBlog(updateBlogTitle[i].value, updateBlogBody[i].value, updateBlogTitle[i].name)
     modals[i].style.display = 'none'
@@ -61,19 +80,19 @@ const createNewBlog = () => {
   fetch('/api/blog/newblog', {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
-      },
-    body: JSON.stringify({ 
-        title: newBlogTitle.value,
-        body: newBlogBody.value
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: newBlogTitle.value,
+      body: newBlogBody.value
 
-     })
-})
-.then(data =>  data.json())
-.then(data => console.log(data))
-.catch(err => console.log(err))
+    })
+  })
+    .then(data => data.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
 
-modal.style.display = 'none';
+  modal.style.display = 'none';
 }
 
 newBlogButton.addEventListener('click', createNewBlog)

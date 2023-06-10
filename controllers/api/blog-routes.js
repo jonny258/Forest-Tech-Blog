@@ -88,6 +88,8 @@ router.delete('/', async (req, res) => {
     console.log(blog)
 
     const deleted = await blog.destroy()
+
+    res.json({ data: deleted})
   }
   catch (err) {
     res.status(500).json(err)
@@ -111,7 +113,11 @@ router.put('/', async (req, res) => {
         }
       }
     )
-    //console.log(blog)
+    res.setHeader('Refresh', '0');
+    res.status(200).end();
+    // res.json({ data: updateBlog})
+
+
   }
   catch (err) {
     res.status(500).json(err)
