@@ -1,4 +1,4 @@
-const inactivityTimeout = 60000;
+const inactivityTimeout = 180000;
 
 let timeoutId;
 

@@ -19,23 +19,27 @@ const format_date = (date) => {
     }`;
 }
 
-//Will need to change when I style it
+
 const addCommentHTML = (commentData, i) => {
-    const date = format_date(commentData.createdAt)
-    const card = document.createElement('section')
-    const author = document.createElement('h4')
-    const createdAt = document.createElement('h4')
-    const body = document.createElement('p')
-
-    card.setAttribute('class', 'comment-card')
-    author.textContent = commentData.author
-    createdAt.textContent = date
-    body.textContent = commentData.body
-
-    card.append(author, createdAt, body)
-
-    commentSection[i].append(card)
-}
+    const date = format_date(commentData.createdAt);
+    const card = document.createElement('section');
+    const header = document.createElement('div');
+    const author = document.createElement('h6');
+    const createdAt = document.createElement('h6');
+    const body = document.createElement('p');
+  
+    card.setAttribute('class', 'comment-card');
+    header.setAttribute('class', 'comment-header');
+    author.textContent = commentData.author;
+    createdAt.textContent = date;
+    body.textContent = commentData.body;
+  
+    header.append(author, createdAt);
+    card.append(header, body);
+  
+    commentSection[i].append(card);
+  };
+  
 
 
 

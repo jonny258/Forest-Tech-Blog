@@ -2,28 +2,30 @@
   <section class="dashboard-blog" data-modal-target="{{id}}">
     <h2>{{title}}</h2>
     <p>Click to edit</p>
+  </section>
 </section>
 
 
 
 <div id="modal-{{id}}" class="modal">
   <div class="modal-content">
-    <h4>Edit blog</h4>
+    <h4 class="mb-4">Edit blog</h4>
     <span class="close">&times;</span>
-    <div>
-      <label>Title</label>
-      <input class="update-blog-title" value="{{title}}" name="{{id}}">
+    <div class="form-group">
+      <label for="update-blog-title">Title</label>
+      <input id="update-blog-title" class="form-control update-blog-title" value="{{title}}" name="{{id}}">
+    </div>
+    <div class="form-group">
+      <label for="update-blog-body">Body</label>
+      <textarea id="update-blog-body" class="form-control update-blog-body">{{body}}</textarea>
     </div>
     <div>
-      <label>Body</label>
-      <textarea class="update-blog-body">{{body}}</textarea>
-    </div>
-    <div>
-        <button class="update-blog-button">Update</button>
-        <button class="delete-blog-button">Delete</button>
+      <button class="btn btn-primary update-blog-button">Update</button>
+      <button class="btn btn-danger delete-blog-button">Delete</button>
     </div>
   </div>
 </div>
+
 </section>
 
 

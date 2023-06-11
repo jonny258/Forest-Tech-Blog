@@ -1,20 +1,28 @@
 <section class="blog-card">
     <section class="main-blog">
-        <p>Click to see comments</p>
-        <h2>{{title}}</h2>
-        <h4>{{users.[0].username}}</h4>
-        <h4>{{createdAt}}</h4>
-        <p>{{body}}</p>
+        <div class="main-blog-header">
+            <h2>{{title}}</h2>
+            <div>
+                <h5>{{users.[0].username}}</h5>
+                <h5>{{createdAt}}</h5>
+            </div>
+        </div>
+        <div class="main-blog-body">
+            <h6>Click to see comments</h6>
+            <p>{{body}}</p>
+        </div>
     </section>
 
     <section class="comment-section">
         <div class="add-comment">
             <lable>Add comment</lable>
             <input class="comment-input">
-            <button class="comment-submit">Submit</button>
+            <button class="comment-submit btn btn-light">Submit</button>
         </div>
-        {{#each comments as |comment|}}
-        {{> comment-details}}
-        {{/each}}
+        <div>
+            {{#each comments as |comment|}}
+            {{> comment-details}}
+            {{/each}}
+        </div>
     </section>
 </section>

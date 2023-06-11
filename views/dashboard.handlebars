@@ -1,16 +1,4 @@
-<section>
-    <nav>
-        <a href="/">Home</a>
-        {{#if loggedIn}}
-        <a href="/dashboard">Dashboard</a>
-        <button id="logout-button">Logout</button>
-        <script src="./js/logout.js"></script>
-        {{else}}
-        <a href="/login">Dashboard</a>
-        <a href="/login">Login</a>
-        {{/if}}
-    </nav>
-    <h1 id="tech-header">Tech Blog</h1>
+  <section>
     <section id="blog-render">
         {{#each userBlogs as |blog|}}
         {{> dashboard-details }}
@@ -18,20 +6,20 @@
     </section>
     <div id="modal" class="modal">
         <div class="modal-content">
-            <h4>Create new blog</h4>
+            <h4 class="mb-4">Create new blog</h4>
             <span class="close">&times;</span>
-            <div>
-                <label>Title</label>
-                <input id="new-blog-title">
+            <div class="form-group">
+                <label for="new-blog-title">Title</label>
+                <input id="new-blog-title" class="form-control">
             </div>
-            <div>
-                <label>Body</label>
-                <textarea id="new-blog-body"></textarea>
+            <div class="form-group">
+                <label for="new-blog-body">Body</label>
+                <textarea id="new-blog-body" class="form-control"></textarea>
             </div>
-            <button id="new-blog-button">Create</button>
+            <button id="new-blog-button" class="btn btn-primary">Create</button>
         </div>
     </div>
 
-    <button id="open-modal">New Blog</button>
+    <button id="open-modal" class="btn btn-primary mt-3">New Blog</button>
     <script src="./js/dashboard.js"></script>
-</section>
+  </section>
