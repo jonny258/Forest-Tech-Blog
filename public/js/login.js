@@ -8,8 +8,7 @@ loginButton.addEventListener('click', async () => {
   const username = loginUsername.value.trim()
   const password = loginPassword.value.trim()
 
-
-  if (username && password) {
+  if (username && password) { //checks to see if both the login and password are filled out
     const responce = await fetch('/api/user/login', {
       method: 'POST',
       headers: {
@@ -21,15 +20,14 @@ loginButton.addEventListener('click', async () => {
       }),
     })
     if (responce.ok) {
-      document.location.replace('/')
+      document.location.replace('/') //redirects you to the homepage
     } else {
       alert('Login Failed')
     }
   } else {
     alert('Please fill in all fields')
   }
-
-  //why is this not clearing
+  
   loginUsername.value = ''
   loginPassword.value = ''
 })

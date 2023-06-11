@@ -37,18 +37,9 @@ BlogUser.init(
         modelName: 'blog_user',
     }
 )
+//This model is a through table that just links the users to the blogs
 
-// Blog.belongsTo(User, {
-//     through: BlogUser,
-//     foreignKey: 'blog_id',
-//   });
-  
-//   User.belongsToMany(Blog, {
-//     through: BlogUser,
-//     foreignKey: 'user_id',
-//   });
-
-User.belongsToMany(Blog, { through: BlogUser });
+User.belongsToMany(Blog, { through: BlogUser }); //Im defining the associations here to reduce the errors
 
 Blog.belongsToMany(User, { through: BlogUser });
 

@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const User = require('./user'); // Import the User model
+const User = require('./user');
 const Comment = require('./comment')
 
 class Blog extends Model {}
@@ -32,7 +32,7 @@ Blog.init(
 );
 
 
-Blog.hasMany(Comment, { foreignKey: 'blog_id' });
+Blog.hasMany(Comment, { foreignKey: 'blog_id' }); //Im defining the associations here to reduce the errors
 Comment.belongsTo(Blog, { foreignKey: 'blog_id' });
 
 module.exports = Blog;

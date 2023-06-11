@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection'); //i still need to require sequalize here so that i can use some of the different properties
+const sequelize = require('../config/connection');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 const BlogUser = require('../models/bloguser')
@@ -7,25 +7,24 @@ const Comment = require('../models/comment')
 const { format_date, format_time } = require('../utils/helper')
 
 //HOME PAGE
-router.get('/', async (req, res) => { //this function is called in async because i have things after the call i make to the database
-  //the call to the database takes time so the function will just skip and go to the next part
+router.get('/', async (req, res) => {
   try {
     const dbBlogUserData = await Blog.findAll({
       include: [
         {
-          model: Comment,
+          model: Comment, //gets all the comments for the blogs
         },
         {
-          model: User,
+          model: User, //get the username for the blogs
           through: BlogUser,
         },
       ],
     }) //gets all the data async
-    const blogs = dbBlogUserData.map((blog) => {
+    const blogs = dbBlogUserData.map((blog) => { //change the data so that it is presentable 
       const formattedBlog = blog.get({ plain: true });
-      formattedBlog.createdAt = format_date(formattedBlog.createdAt);
+      formattedBlog.createdAt = format_date(formattedBlog.createdAt); //change dates on the blog
       formattedBlog.comments.forEach(comment => {
-        comment.createdAt = format_date(comment.createdAt);
+        comment.createdAt = format_date(comment.createdAt); //change dates on the comments
       })
       return formattedBlog;
     });
@@ -37,11 +36,11 @@ router.get('/', async (req, res) => { //this function is called in async because
   }
   catch (err) {
     console.log(err)
-    res.status(500).json(err) //sets the status then sends the error in json
+    res.status(500).json(err)
   }
 })
 
-
+//DASHBOARD PAGE
 router.get('/dashboard', async (req, res) => {
   try {
     if (!req.session.loggedIn) {
@@ -49,59 +48,37 @@ router.get('/dashboard', async (req, res) => {
     } else {
       const loggedInUserId = req.session.userid;
       console.log(loggedInUserId)
-      const blogs = await Blog.findAll({
+      const blogs = await Blog.findAll({ //finds all of the blogs that you authored
         include: [
           {
             model: User,
             through: BlogUser,
-            where: { id: loggedInUserId }
+            where: { id: loggedInUserId } //this is the line that pulls up only the ones you wrote
           }
         ]
       })
-      // const formattedBlog = blogs.get({ plain: true });
-
-      // console.log(formattedBlog)
-      const blogValues = blogs.map(blog => {
+      const blogValues = blogs.map(blog => { //format the data so I can send it to handlebars
         return blog.dataValues
       })
-      console.log(blogValues)
       res.render('dashboard', {
         loggedIn: req.session.loggedIn,
         userBlogs: blogValues
       })
     }
   }
-
-
-
-
   catch (err) {
     res.status(400).json(err)
   }
 })
-// for(let i=0; i<blogs.length; i++){
-//   console.log(blogs[i].dataValues.users[0].dataValues)
-// }
-
-// const userBlogValues = []
-// for(let i=0; i<blogs.length; i++){
-
-//   if(blogs[i].dataValues.users[0].dataValues.id === req.session.userid){
-//     userBlogValues.push(blogs[i].dataValues)
-//   }
-// }
-// console.log(userBlogValues)
-
-
-
 
 //SIGN UP
 router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
+//LOGIN
 router.get('/login', (req, res) => {
-  if(req.session.loggedIn){
+  if(req.session.loggedIn){ //if you go to the login page the session changes to loggedIn false, this only happens if you are idle for 3 minutes
     req.session.loggedIn = false;
   }
   res.render('login')

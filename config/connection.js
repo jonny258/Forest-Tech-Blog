@@ -3,7 +3,7 @@ require('dotenv').config(); //this is what you need to get the .env file to work
 
 
 let sequelize;
-if(process.env.JAWSDB_URL) {
+if(process.env.JAWSDB_URL) { //this if statement checks to see if the backend is jawsDB or not
   sequelize = new Sequelize(process.env.JAWSDB_URL)
 }else{
   sequelize = new Sequelize(

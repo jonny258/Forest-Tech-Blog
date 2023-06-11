@@ -6,7 +6,7 @@ signupButton.addEventListener('click', async () => {
     const username = signupUsername.value.trim()
     const password = signupPassword.value.trim()
 
-    if(username && password){
+    if(username && password){ //checks to see if the username and password are both filled out
         const responce = await fetch('/api/user/signup', {
             method: 'POST',
             headers: {
@@ -25,7 +25,6 @@ signupButton.addEventListener('click', async () => {
         }
     }
     
-    //why is this not clearing
     signupUsername.value = ''
     signupPassword.value = ''
 })

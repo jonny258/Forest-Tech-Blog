@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
           model: Comment, // Include the Comment model
         },
         {
-          model: User,
+          model: User, //include the user model through the BlogUser through table
           through: BlogUser,
         },
       ],
@@ -35,9 +35,9 @@ router.get('/', async (req, res) => {
 router.post('/comment', async (req, res) => {
   try {
     if (!req.session.loggedIn) {
-      res.status(400).json({ alert: 'Must be logged in to make comments.' });
+      res.status(400).json({ alert: 'Must be logged in to make comments.' }); //Logic so that you can only comment if you are logged in
     } else {
-      const user = await User.findByPk(req.session.userid)
+      const user = await User.findByPk(req.session.userid) //gets the logged in users username
       const username = user.dataValues.username
       const newComment = await Comment.create({
         body: req.body.comment,
@@ -54,7 +54,7 @@ router.post('/comment', async (req, res) => {
       }
 
       res.json({
-        comment: newComment
+        comment: newComment //sends the code back to the frontend so the the comment can render without a hard reset
       });
     }
   }
@@ -65,12 +65,12 @@ router.post('/comment', async (req, res) => {
 
 router.post('/newblog', async (req, res) => {
   try {
-    const newBlog = await Blog.create({
+    const newBlog = await Blog.create({ //updates the blog model
       title: req.body.title,
       body: req.body.body
     })
 
-    const newBlogUser = await BlogUser.create({
+    const newBlogUser = await BlogUser.create({ //updates the bloguser model so that the relations update as well
       user_id: req.session.userid,
       blog_id: newBlog.dataValues.id
     })
@@ -83,6 +83,7 @@ res.json( {blog: newBlogUser} )
 
 })
 
+//Delete the blog from the dashboard
 router.delete('/', async (req, res) => {
   try {
     console.log(req.body)
@@ -98,11 +99,10 @@ router.delete('/', async (req, res) => {
   }
 })
 
-
+//Update the blog from the dashboard
 router.put('/', async (req, res) => {
   try {
     console.log(req.body)
-    //const blog = await Blog.findByPk(req.body.id)
 
     const updateBlog = await Blog.update(
       {
@@ -117,9 +117,6 @@ router.put('/', async (req, res) => {
     )
     res.setHeader('Refresh', '0');
     res.status(200).end();
-    // res.json({ data: updateBlog})
-
-
   }
   catch (err) {
     res.status(500).json(err)

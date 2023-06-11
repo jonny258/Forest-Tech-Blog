@@ -14,10 +14,10 @@ const modals = document.querySelectorAll('.modal');
 
 const blogRender = document.querySelector('#blog-render')
 
-const updateBlog = async (title, body, id) => {
+const updateBlog = async (title, body, id) => { //The PUT to update the blog from the dashboard
   try {
     const update = document.getElementById(id)
-    update.children[0].children[0].innerText = title
+    update.children[0].children[0].innerText = title //updates on the frontend
     const response = await fetch('/api/blog/', {
       method: 'PUT',
       headers: {
@@ -41,9 +41,9 @@ const updateBlog = async (title, body, id) => {
   }
 }
 
-const deleteBlog = async (title, body, id) => {
+const deleteBlog = async (title, body, id) => { //The DELETE to delete the blog from the dashboard
   try {
-    document.getElementById(id).remove()
+    document.getElementById(id).remove() //updates on the frontend
     const response = await fetch('/api/blog/', {
       method: 'DELETE',
       headers: {
@@ -66,21 +66,20 @@ const deleteBlog = async (title, body, id) => {
 }
 
 
-for (let i = 0; i < updateBlogTitle.length; i++) {
+for (let i = 0; i < updateBlogTitle.length; i++) { //adds event listeners to all the update and delete buttons
   updateBlogButton[i].addEventListener('click', () => {
     updateBlog(updateBlogTitle[i].value, updateBlogBody[i].value, updateBlogTitle[i].name)
-    modals[i].style.display = 'none'
+    modals[i].style.display = 'none' //closes the modal after the blog is updated
   })
 
   deleteBlogButton[i].addEventListener('click', () => {
     deleteBlog(updateBlogTitle[i].value, updateBlogBody[i].value, updateBlogTitle[i].name)
-    modals[i].style.display = 'none'
+    modals[i].style.display = 'none' //closes the modal after the blog is deleted
   })
 }
 
 
-//Will need to change once I style
-const createBlogHTML = (id, title, body) => {
+const createBlogHTML = (id, title, body) => { //This creates a new blog on the frontend so you will not need a hard refresh
   const section = document.createElement('section');
   section.id = id;
 
@@ -153,8 +152,7 @@ const createBlogHTML = (id, title, body) => {
 
 
 
-
-const createNewBlog = async () => {
+const createNewBlog = async () => { //the POST to make a new blog
   try {
     const response = await fetch('/api/blog/newblog', {
       method: 'POST',
@@ -170,7 +168,7 @@ const createNewBlog = async () => {
     const data = await response.json();
     const id = data.blog.blog_id;
 
-    createBlogHTML(id, newBlogTitle.value, newBlogBody.value);
+    createBlogHTML(id, newBlogTitle.value, newBlogBody.value); //runs function that creates a new html blog on the frontend
     modal.style.display = 'none';
   } catch (err) {
     console.log(err);
@@ -181,14 +179,7 @@ const createNewBlog = async () => {
 newBlogButton.addEventListener('click', createNewBlog)
 
 
-
-
-
-
-
-
 //MODALS STUFF
-
 const openModalButton = document.getElementById('open-modal');
 const modal = document.getElementById('modal');
 const closeButton = document.getElementsByClassName('close')[0];
@@ -207,9 +198,6 @@ window.addEventListener('click', (event) => {
     modal.style.display = 'none';
   }
 })
-
-
-
 
 
 blogSections.forEach((section, index) => {

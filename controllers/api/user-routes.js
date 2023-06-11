@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const User = require('../../models/user') //pulls in the user model, with this user modle we can select the data in the database
-//this user model in this file is the model part talking to the controller part the communication between those 2 goes both ways
 const Blog = require('../../models/blog')
 const BlogUser = require('../../models/bloguser')
 
+//to test the database with insomnia
 router.get('/', (req, res) => {
     User.findAll({
        include: [
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
   });
   
 
-
+//Makes a new user on sign up
 router.post('/signup', async (req, res) => {
     try{
         const { username, password } = req.body
@@ -32,7 +32,7 @@ router.post('/signup', async (req, res) => {
             username: username,
             password: password,
         })
-        req.session.save(() => {
+        req.session.save(() => { //makes a session and sets the login to true 
             req.session.loggedIn = true;
             req.session.userid = newUserData.dataValues.id;
             res.status(200).json(newUserData)
@@ -44,6 +44,7 @@ router.post('/signup', async (req, res) => {
     }
 })
 
+//login routes
 router.post('/login', async (req, res) => {
     try{
         const { username, password } = req.body;
@@ -54,7 +55,7 @@ router.post('/login', async (req, res) => {
                 username: username
             }
         });
-
+        //username failed
         if(!userData){
             console.log('username failed')
             res.status(400).json({message: 'Incorrect email or password.'});
@@ -69,14 +70,15 @@ router.post('/login', async (req, res) => {
                 return true
             }
         }
+
+        //password failed
         const validatePassword = await checkedPassword(password, userData.dataValues.password)
-        console.log(validatePassword)
         if(!validatePassword){
             console.log('password failed')
             res.status(400).json({message: 'Incorrect email or password.'});
             return;
         }
-        req.session.save(() => {
+        req.session.save(() => { //makes a session and sets the login to true 
             req.session.loggedIn = true;
             req.session.userid = userData.dataValues.id;
             res.status(200).json({ user: userData, message: "Logged in"})
@@ -92,7 +94,7 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async(req, res) => {
     try{
         if(req.session.loggedIn){
-            req.session.destroy(() => {
+            req.session.destroy(() => { //destorys the session
                 res.status(200).end();
             });
         } else {

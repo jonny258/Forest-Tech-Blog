@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('../config/connection')
 const Blog = require('./blog')
+const bcrypt = require('bcrypt');
 
 class User extends Model {};
 
@@ -22,19 +23,24 @@ User.init(
             allowNull: false,
         },
     },
-    {
+    {//This encrypts the users passwords
+        hooks: {
+            beforeCreate: async (user) => {
+                user.password = await bcrypt.hash(user.password, 10);
+            },
+            beforeUpdate: async (user) => {
+                if (user.changed('password')) {
+                    user.password = await bcrypt.hash(user.password, 10);
+                }
+            },
+        },
         sequelize,
         freezeTableName: true,
         underscored: true,
         modelName: 'user',
         tableName: 'user',
     }
-)
+);
 
-// User.hasMany(Blog, {
-//     foreignKey: 'user_id', // Assuming 'user_id' is the foreign key in the 'blogs' table referencing 'id' in the 'users' table
-//   });
-
-// User.hasMany(Blog, { foreignKey: 'user_id' }); // Define the association
 
 module.exports = User;
