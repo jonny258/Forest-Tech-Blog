@@ -19,6 +19,7 @@ const format_date = (date) => {
     }`;
 }
 
+//Will need to change when I style it
 const addCommentHTML = (commentData, i) => {
     const date = format_date(commentData.createdAt)
     const card = document.createElement('section')

@@ -10,12 +10,12 @@
         <a href="/login">Login</a>
         {{/if}}
     </nav>
-    <section>
+    <h1 id="tech-header">Tech Blog</h1>
+    <section id="blog-render">
         {{#each userBlogs as |blog|}}
         {{> dashboard-details }}
         {{/each}}
     </section>
-    <h1 id="tech-header">Tech Blog</h1>
     <div id="modal" class="modal">
         <div class="modal-content">
             <h4>Create new blog</h4>

@@ -101,6 +101,9 @@ router.get('/signup', (req, res) => {
 })
 
 router.get('/login', (req, res) => {
+  if(req.session.loggedIn){
+    req.session.loggedIn = false;
+  }
   res.render('login')
 })
 

@@ -12,6 +12,8 @@ const deleteBlogButton = document.querySelectorAll('.delete-blog-button')
 const blogSections = document.querySelectorAll('.dashboard-blog');
 const modals = document.querySelectorAll('.modal');
 
+const blogRender = document.querySelector('#blog-render')
+
 const updateBlog = async (title, body, id) => {
   try {
     const update = document.getElementById(id)
@@ -76,24 +78,105 @@ for (let i = 0; i < updateBlogTitle.length; i++) {
   })
 }
 
-const createNewBlog = () => {
-  fetch('/api/blog/newblog', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      title: newBlogTitle.value,
-      body: newBlogBody.value
 
-    })
-  })
-    .then(data => data.json())
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+//Will need to change once I style
+const createBlogHTML = (id, title, body) => {
+  const section = document.createElement('section');
+  section.id = id;
 
-  modal.style.display = 'none';
+  const blogSection = document.createElement('section');
+  blogSection.classList.add('dashboard-blog');
+  blogSection.setAttribute('data-modal-target', id);
+
+  const h2 = document.createElement('h2');
+  h2.textContent = title;
+  blogSection.appendChild(h2);
+
+  const p = document.createElement('p');
+  p.textContent = 'Click to edit';
+  blogSection.appendChild(p);
+
+  section.appendChild(blogSection);
+
+  const modalDiv = document.createElement('div');
+  modalDiv.id = 'modal-' + id;
+  modalDiv.classList.add('modal');
+
+  const modalContentDiv = document.createElement('div');
+  modalContentDiv.classList.add('modal-content');
+
+  const h4 = document.createElement('h4');
+  h4.textContent = 'Edit blog';
+  modalContentDiv.appendChild(h4);
+
+  const closeButtonEl = document.createElement('span');
+  closeButtonEl.classList.add('close');
+  closeButtonEl.textContent = '×';
+  modalContentDiv.appendChild(closeButtonEl);
+
+  const titleDiv = document.createElement('div');
+  const titleLabel = document.createElement('label');
+  titleLabel.textContent = 'Title';
+  titleDiv.appendChild(titleLabel);
+  const titleInput = document.createElement('input');
+  titleInput.classList.add('update-blog-title');
+  titleInput.value = title;
+  titleInput.name = id;
+  titleDiv.appendChild(titleInput);
+  modalContentDiv.appendChild(titleDiv);
+
+  const bodyDiv = document.createElement('div');
+  const bodyLabel = document.createElement('label');
+  bodyLabel.textContent = 'Body';
+  bodyDiv.appendChild(bodyLabel);
+  const bodyTextArea = document.createElement('textarea');
+  bodyTextArea.classList.add('update-blog-body');
+  bodyTextArea.textContent = body;
+  bodyDiv.appendChild(bodyTextArea);
+  modalContentDiv.appendChild(bodyDiv);
+
+  const buttonDiv = document.createElement('div');
+  const updateButton = document.createElement('button');
+  updateButton.classList.add('update-blog-button');
+  updateButton.textContent = 'Update';
+  buttonDiv.appendChild(updateButton);
+  const deleteButton = document.createElement('button');
+  deleteButton.classList.add('delete-blog-button');
+  deleteButton.textContent = 'Delete';
+  buttonDiv.appendChild(deleteButton);
+  modalContentDiv.appendChild(buttonDiv);
+
+  modalDiv.appendChild(modalContentDiv);
+  section.appendChild(modalDiv);
+  blogRender.append(section)
 }
+
+
+
+
+const createNewBlog = async () => {
+  try {
+    const response = await fetch('/api/blog/newblog', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: newBlogTitle.value,
+        body: newBlogBody.value,
+      }),
+    });
+
+    const data = await response.json();
+    const id = data.blog.blog_id;
+
+    createBlogHTML(id, newBlogTitle.value, newBlogBody.value);
+    modal.style.display = 'none';
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 newBlogButton.addEventListener('click', createNewBlog)
 

@@ -74,6 +74,8 @@ router.post('/newblog', async (req, res) => {
       user_id: req.session.userid,
       blog_id: newBlog.dataValues.id
     })
+
+res.json( {blog: newBlogUser} )
   }
   catch (err) {
     res.status(400).json(err)
