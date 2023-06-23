@@ -165,11 +165,9 @@ const createNewBlog = async () => { //the POST to make a new blog
       }),
     });
 
-    const data = await response.json();
-    const id = data.blog.blog_id;
 
-    createBlogHTML(id, newBlogTitle.value, newBlogBody.value); //runs function that creates a new html blog on the frontend
     modal.style.display = 'none';
+    location.reload()
   } catch (err) {
     console.log(err);
   }

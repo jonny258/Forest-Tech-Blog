@@ -12,6 +12,29 @@
   font-size: 60px;
 }
 
+footer p {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 5px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+footer a{
+  text-decoration: none;
+}
+
+footer a:hover{
+  text-decoration: underline;
+}
+
+
 nav {
   margin-left: 200px;
   margin-right: 200px;
@@ -42,6 +65,11 @@ nav a:hover {
 
 .blog-card{
   margin-top: 30px;
+  width: 80%;
+}
+
+.submit-com input{
+  background-color: aqua;
 }
 
 .main-blog-header{
@@ -75,12 +103,14 @@ nav a:hover {
   padding-top: 0px;
 }
 
-.comment-section{
-  display: none;
+.comment-section {
+  align-items: center;
   background-color: white;
   padding: 10px;
-  width: 50%;
+  width: 80%;
+  margin: 0 auto;
 }
+
 
 .add-comment{
   border-radius: 5px;
@@ -90,14 +120,26 @@ nav a:hover {
   margin-bottom: 10px;
 }
 
+
 .comment-card{
   border-radius: 5px;
   border: 3px solid rgb(0, 29, 0);
   margin-top: 10px;
+  background-color: white;
 }
 
 .comment-card p{
   padding: 5px;
+  
+}
+
+.comment-wrapper{
+  border-radius: 5px;
+  background-color: #d0d0d0;
+  max-height: 300px;
+  padding: 10px;
+
+  /* background-color: #888; */
 }
 
 .comment-header{
@@ -194,4 +236,8 @@ h4 {
 button a {
   color: white;
   text-decoration: none;
+}
+
+.sign-log input{
+  max-width: 300px;
 }

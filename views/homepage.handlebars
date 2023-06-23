@@ -1,12 +1,14 @@
-<section>
-    <h2></h2>
-    <div>
-        {{#each blogs as |blog|}}
+<section class="text-center">
+  <div class="d-flex flex-column align-items-center">
+    <h2>Blogs</h2>
+
+      {{#each blogs as |blog|}}
         {{> blog-details}}
-        {{/each}}
-    </div>
-    <script src="./js/blog-details.js"></script>
-    <script src="path/to/dayjs/dayjs.min.js"></script>
+      {{/each}}
+
+  </div>
+  <script src="./js/blog-details.js"></script>
 </section>
+
 
 {{!-- This is the homepage --}}

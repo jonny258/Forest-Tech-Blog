@@ -2,14 +2,16 @@ const mainBlog = document.querySelectorAll('.main-blog')
 const commentSection = document.querySelectorAll('.comment-section')
 const commentInput = document.querySelectorAll('.comment-input')
 const commentSubmit = document.querySelectorAll('.comment-submit')
-
+const commentWrapper = document.querySelectorAll('.comment-wrapper')
 
 const displayComments = (i) => { //this switchs the display on the comment section
     if (commentSection[i].style.display === 'block') {
         commentSection[i].style.display = 'none'
+        mainBlog[i].children[1].children[0].innerText = 'Click to see comments'
     }
     else {
         commentSection[i].style.display = 'block'
+        mainBlog[i].children[1].children[0].innerText = 'Click to close comments'
     }
 }
 
@@ -37,7 +39,7 @@ const addCommentHTML = (commentData, i) => { //makes a comment without having to
     header.append(author, createdAt);
     card.append(header, body);
   
-    commentSection[i].append(card);
+    commentWrapper[i].append(card);
   };
   
 

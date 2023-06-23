@@ -1,6 +1,6 @@
 <section class="blog-card">
-    <section class="main-blog">
-        <div class="main-blog-header">
+    <section class="main-blog rounded">
+        <div class="text-left main-blog-header">
             <h2>{{title}}</h2>
             <div>
                 <h5>{{users.[0].username}}</h5>
@@ -13,13 +13,18 @@
         </div>
     </section>
 
-    <section class="comment-section">
+    <section class="comment-section mt-2 rounded" style="display: none">
         <div class="add-comment">
             <lable>Add comment</lable>
-            <input class="comment-input">
-            <button class="comment-submit btn btn-light">Submit</button>
+
+            <div class="input-group mb-3">
+                <input type="text" class="comment-input form-control" placeholder="Comment"
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="comment-submit btn btn-outline-success" type="button" id="button-addon2">Submit</button>
+            </div>
+
         </div>
-        <div>
+        <div class="overflow-auto comment-wrapper">
             {{#each comments as |comment|}}
             {{> comment-details}}
             {{/each}}
