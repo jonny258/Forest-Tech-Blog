@@ -11,6 +11,12 @@ The Tech Blog offers the following features:
 - User registration and login functionality to secure the site and provide personalized experiences.
 - Encrypted user credentials for enhanced security.
 
+### Screen Shots
+
+![Home page](https://drive.google.com/uc?export=view&id=1DYsQFZ-VUIWDQ_WDvDBZHCH1RAJS3fyl)
+
+![Dash board](https://drive.google.com/uc?export=view&id=1jKyy5AiBww81cp-2JwNmnmlERKHW8W0V)
+
 ### Homepage
 
 - The homepage displays existing blog posts, if any have been posted, allowing users to explore recent articles.
